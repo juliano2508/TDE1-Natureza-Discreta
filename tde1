@@ -1,0 +1,33 @@
+# Função principal
+def main():
+    with open('input.txt', 'r') as arquivo:
+        linhas = arquivo.readlines()
+
+    num_operacoes = int(linhas[0].strip())
+    linha_atual = 1
+
+    for _ in range(num_operacoes):
+        operacao = linhas[linha_atual].strip()
+        conj1 = set(linhas[linha_atual + 1].strip().split(', '))
+        conj2 = set(linhas[linha_atual + 2].strip().split(', '))
+
+        if operacao == 'U':
+            resultado = conj1 | conj2  # União
+            descricao = "União"
+        elif operacao == 'I':
+            resultado = conj1 & conj2  # Interseção
+            descricao = "Interseção"
+        elif operacao == 'D':
+            resultado = conj1 - conj2  # Diferença
+            descricao = "Diferença"
+        elif operacao == 'C':
+            resultado = set([(a, b) for a in conj1 for b in conj2])  # Produto cartesiano
+            descricao = "Produto cartesiano"
+        else:
+            raise ValueError("Operação desconhecida")
+
+        print(f"{descricao}: conjunto 1 {conj1}, conjunto 2 {conj2}. Resultado: {resultado}")
+        linha_atual += 3
+
+if __name__ == "__main__":
+    main()
